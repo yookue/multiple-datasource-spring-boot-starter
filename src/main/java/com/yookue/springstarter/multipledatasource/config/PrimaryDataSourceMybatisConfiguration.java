@@ -17,7 +17,7 @@
 package com.yookue.springstarter.multipledatasource.config;
 
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

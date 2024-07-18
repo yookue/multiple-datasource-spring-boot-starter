@@ -17,10 +17,8 @@
 package com.yookue.springstarter.multipledatasource.config;
 
 
-import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.sql.DataSource;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -32,7 +30,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DruidDataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
@@ -50,7 +47,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.TransactionManager;
-import com.alibaba.druid.filter.Filter;
 import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAnyProperties;
 import com.yookue.commonplexus.springcondition.annotation.ConditionalOnMissingProperty;
 import com.yookue.springstarter.datasourcebuilder.composer.DataSourceBuilder;
@@ -73,7 +69,7 @@ import com.yookue.springstarter.datasourcebuilder.enumeration.DataSourcePoolType
 @ConditionalOnClass(value = {DataSource.class, JdbcOperations.class})
 @AutoConfigureAfter(value = {DataSourceBuilderConfiguration.class, PrimaryDataSourceJdbcConfiguration.class})
 @AutoConfigureBefore(value = {DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@Import(value = {DataSourceBuilderConfiguration.class, SecondaryDataSourceJdbcConfiguration.Entry.class, SecondaryDataSourceJdbcConfiguration.Xa.class, SecondaryDataSourceJdbcConfiguration.Jndi.class, SecondaryDataSourceJdbcConfiguration.C3p0.class, SecondaryDataSourceJdbcConfiguration.Dbcp2.class, SecondaryDataSourceJdbcConfiguration.Druid.class, SecondaryDataSourceJdbcConfiguration.Hikari.class, SecondaryDataSourceJdbcConfiguration.OracleUcp.class, SecondaryDataSourceJdbcConfiguration.Tomcat.class, SecondaryDataSourceJdbcConfiguration.Generic.class, SecondaryDataSourceJdbcConfiguration.Stage.class})
+@Import(value = {DataSourceBuilderConfiguration.class, SecondaryDataSourceJdbcConfiguration.Entry.class, SecondaryDataSourceJdbcConfiguration.Xa.class, SecondaryDataSourceJdbcConfiguration.Jndi.class, SecondaryDataSourceJdbcConfiguration.C3p0.class, SecondaryDataSourceJdbcConfiguration.Dbcp2.class, SecondaryDataSourceJdbcConfiguration.Hikari.class, SecondaryDataSourceJdbcConfiguration.OracleUcp.class, SecondaryDataSourceJdbcConfiguration.Tomcat.class, SecondaryDataSourceJdbcConfiguration.Generic.class, SecondaryDataSourceJdbcConfiguration.Stage.class})
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class SecondaryDataSourceJdbcConfiguration {
     public static final String PROPERTIES_PREFIX = "spring.multiple-datasource.secondary";    // $NON-NLS-1$
@@ -82,6 +78,7 @@ public class SecondaryDataSourceJdbcConfiguration {
     public static final String JDBC_TEMPLATE = "secondaryDataSourceJdbcTemplate";    // $NON-NLS-1$
     public static final String TRANSACTION_MANAGER = "secondaryDataSourceTransactionManager";    // $NON-NLS-1$
     public static final String METADATA_PROVIDER = "secondaryDataSourceMetadataProvider";    // $NON-NLS-1$
+
 
     @Order(value = 0)
     static class Entry {
@@ -93,6 +90,7 @@ public class SecondaryDataSourceJdbcConfiguration {
         }
     }
 
+
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "xa")
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = {DataSourceBuilder.class, XADataSourceWrapper.class})
     @Order(value = 1)
@@ -100,9 +98,10 @@ public class SecondaryDataSourceJdbcConfiguration {
         @Bean(name = DATA_SOURCE)
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public DataSource dataSource(@Nonnull DataSourceBuilder builder, @Nonnull XADataSourceWrapper wrapper, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) throws Exception {
-            return builder.xaDataSource(wrapper, properties);
+            return builder.xaDataSource(wrapper, properties, null);
         }
     }
+
 
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
     @ConditionalOnClass(value = org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup.class)
@@ -116,6 +115,7 @@ public class SecondaryDataSourceJdbcConfiguration {
         }
     }
 
+
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.C3P0, matchIfMissing = true)
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
     @ConditionalOnClass(value = com.mchange.v2.c3p0.ComboPooledDataSource.class)
@@ -128,6 +128,7 @@ public class SecondaryDataSourceJdbcConfiguration {
             return (com.mchange.v2.c3p0.ComboPooledDataSource) builder.dataSource(properties, DataSourcePoolType.C3P0);
         }
     }
+
 
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.DBCP2, matchIfMissing = true)
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
@@ -148,20 +149,6 @@ public class SecondaryDataSourceJdbcConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.DRUID, matchIfMissing = true)
-    @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
-    @ConditionalOnClass(value = com.alibaba.druid.pool.DruidDataSource.class)
-    @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
-    @Order(value = 5)
-    static class Druid {
-        @Bean(name = DATA_SOURCE, initMethod = "init", destroyMethod = "close")
-        @ConditionalOnMissingBean(name = DATA_SOURCE)
-        public com.alibaba.druid.pool.DruidDataSource dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties, @Nullable List<Filter> filters) {
-            com.alibaba.druid.pool.DruidDataSource dataSource = (com.alibaba.druid.pool.DruidDataSource) builder.dataSource(properties, DataSourcePoolType.DRUID);
-            DruidDataSourceBuilder.addOrReplaceFilters(dataSource, filters);
-            return dataSource;
-        }
-    }
 
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.HIKARI, matchIfMissing = true)
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
@@ -182,6 +169,7 @@ public class SecondaryDataSourceJdbcConfiguration {
         }
     }
 
+
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.ORACLE_UCP, matchIfMissing = true)
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
     @ConditionalOnClass(value = oracle.ucp.jdbc.PoolDataSourceImpl.class)
@@ -201,6 +189,7 @@ public class SecondaryDataSourceJdbcConfiguration {
         }
     }
 
+
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.ORACLE_UCP_XA, matchIfMissing = true)
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
     @ConditionalOnClass(value = oracle.ucp.jdbc.PoolXADataSourceImpl.class)
@@ -219,6 +208,7 @@ public class SecondaryDataSourceJdbcConfiguration {
             return sqlDataSource -> new OracleUcpDataSourcePoolMetadata(dataSource);
         }
     }
+
 
     @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.TOMCAT, matchIfMissing = true)
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
@@ -242,6 +232,7 @@ public class SecondaryDataSourceJdbcConfiguration {
         }
     }
 
+
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
     @Order(value = 10)
     static class Generic {
@@ -252,6 +243,7 @@ public class SecondaryDataSourceJdbcConfiguration {
             return builder.dataSource(properties);
         }
     }
+
 
     @Order(value = 11)
     static class Stage {

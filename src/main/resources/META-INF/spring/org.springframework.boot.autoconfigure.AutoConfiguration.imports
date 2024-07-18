@@ -2,7 +2,6 @@
 # Copyright (c) 2020 Yookue Ltd. All rights reserved.
 # https://yookue.com
 
-com.yookue.springstarter.multipledatasource.config.DruidDataSourcePreConfiguration
 com.yookue.springstarter.multipledatasource.config.PrimaryDataSourceJdbcConfiguration
 com.yookue.springstarter.multipledatasource.config.PrimaryDataSourceJpaConfiguration
 com.yookue.springstarter.multipledatasource.config.PrimaryDataSourceRepositoryConfiguration
