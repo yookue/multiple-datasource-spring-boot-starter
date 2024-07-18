@@ -69,6 +69,7 @@ spring:
 - This starter supports the most popular data source pools in the world, including
   - c3p0
   - dbcp2
+  - druid
   - hikari
   - oracle ucp
   - tomcat

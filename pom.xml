@@ -50,6 +50,7 @@
         <spring-boot.version>3.3.1</spring-boot.version>
 
         <c3p0.version>0.9.5.5</c3p0.version>
+        <druid.version>1.2.21</druid.version>
         <plexus-spring-condition.version>3.3.1.1</plexus-spring-condition.version>
 
         <datasource-builder-spring-boot-starter.version>3.3.1</datasource-builder-spring-boot-starter.version>
@@ -99,6 +100,22 @@
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
                     <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+            <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun</groupId>
+                    <artifactId>jconsole</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
