@@ -161,7 +161,7 @@
         </dependency>
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ucp</artifactId>
+            <artifactId>ucp11</artifactId>
             <optional>true</optional>
         </dependency>
 
