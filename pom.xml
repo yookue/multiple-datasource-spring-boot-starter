@@ -161,6 +161,11 @@
         </dependency>
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ucp11</artifactId>
             <optional>true</optional>
         </dependency>
