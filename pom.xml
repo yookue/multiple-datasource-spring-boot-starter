@@ -22,7 +22,7 @@
 
     <groupId>com.yookue.springstarter</groupId>
     <artifactId>multiple-datasource-spring-boot-starter</artifactId>
-    <version>3.4.1</version>
+    <version>3.4.2</version>
 
     <name>${project.artifactId}</name>
     <description>Multiple Datasource for Spring Boot Starter</description>
@@ -47,14 +47,14 @@
         <project.build.resourceEncoding>${file.encoding}</project.build.resourceEncoding>
         <project.reporting.outputEncoding>${file.encoding}</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.4.1</spring-boot.version>
+        <spring-boot.version>3.4.2</spring-boot.version>
 
-        <c3p0.version>0.10.1</c3p0.version>
+        <c3p0.version>0.10.2</c3p0.version>
         <druid.version>1.2.23</druid.version>
-        <plexus-spring-condition.version>3.4.1</plexus-spring-condition.version>
+        <plexus-spring-condition.version>3.4.2</plexus-spring-condition.version>
 
-        <datasource-builder-spring-boot-starter.version>3.4.1</datasource-builder-spring-boot-starter.version>
-        <mybatis-delegator-spring-boot-starter.version>3.4.1</mybatis-delegator-spring-boot-starter.version>
+        <datasource-builder-spring-boot-starter.version>3.4.2</datasource-builder-spring-boot-starter.version>
+        <mybatis-delegator-spring-boot-starter.version>3.4.2</mybatis-delegator-spring-boot-starter.version>
 
         <javadoc-docent-maven-plugin.version>2.0.2</javadoc-docent-maven-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -64,7 +64,7 @@
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-        <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
+        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -362,10 +362,10 @@
                     <excludePackageNames>org.springframework.*</excludePackageNames>
                     <links>
                         <!--
-                        <link>https://docs.spring.io/spring-boot/docs/current/api/</link>
+                        <link>https://docs.spring.io/spring-boot/docs/current/api</link>
                         -->
-                        <link>https://docs.spring.io/spring-framework/docs/current/javadoc-api/</link>
-                        <link>https://mybatis.org/mybatis-3/apidocs/</link>
+                        <link>https://docs.spring.io/spring-framework/docs/current/javadoc-api</link>
+                        <link>https://mybatis.org/mybatis-3/apidocs</link>
                     </links>
                     <taglets>
                         <taglet>
