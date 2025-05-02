@@ -121,7 +121,7 @@ public class SecondaryDataSourceJpaConfiguration {
         @Autowired(required = false) @Qualifier(value = ENTITY_MANAGER_FACTORY_BUILDER_EXECUTOR) @Nullable AsyncTaskExecutor executor,
         @Autowired(required = false) @Qualifier(value = ENTITY_MANAGER_FACTORY_BUILDER_CUSTOMIZER) @Nullable EntityManagerFactoryBuilderCustomizer customizer,
         @Qualifier(value = JPA_PROPERTIES) @Nonnull JpaProperties properties) {
-        EntityManagerFactoryBuilder builder = new EntityManagerFactoryBuilder(JpaConfigurationUtils.hibernateJpaVendorAdapter(properties), properties.getProperties(), manager);
+        EntityManagerFactoryBuilder builder = new EntityManagerFactoryBuilder(JpaConfigurationUtils.hibernateJpaVendorAdapter(properties), (datasource) -> properties.getProperties(), manager);
         builder.setBootstrapExecutor(executor);
         if (customizer != null) {
             customizer.customize(builder);
