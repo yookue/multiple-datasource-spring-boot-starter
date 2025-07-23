@@ -22,7 +22,7 @@
 
     <groupId>com.yookue.springstarter</groupId>
     <artifactId>multiple-datasource-spring-boot-starter</artifactId>
-    <version>3.5.2</version>
+    <version>3.5.3</version>
 
     <name>${project.artifactId}</name>
     <description>Yookue Multiple Datasource for Spring Boot Starter</description>
@@ -47,14 +47,14 @@
         <project.build.resourceEncoding>${file.encoding}</project.build.resourceEncoding>
         <project.reporting.outputEncoding>${file.encoding}</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.5.2</spring-boot.version>
+        <spring-boot.version>3.5.3</spring-boot.version>
 
-        <c3p0.version>0.11.1</c3p0.version>
-        <druid.version>1.2.25</druid.version>
-        <plexus-spring-condition.version>3.5.2</plexus-spring-condition.version>
+        <c3p0.version>0.11.2</c3p0.version>
+        <druid.version>1.2.27</druid.version>
+        <plexus-spring-condition.version>3.5.3</plexus-spring-condition.version>
 
-        <datasource-builder-spring-boot-starter.version>3.5.2</datasource-builder-spring-boot-starter.version>
-        <mybatis-delegator-spring-boot-starter.version>3.5.2</mybatis-delegator-spring-boot-starter.version>
+        <datasource-builder-spring-boot-starter.version>3.5.3</datasource-builder-spring-boot-starter.version>
+        <mybatis-delegator-spring-boot-starter.version>3.5.3</mybatis-delegator-spring-boot-starter.version>
 
         <javadoc-docent-maven-plugin.version>2.0.2</javadoc-docent-maven-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
@@ -63,8 +63,8 @@
         <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
