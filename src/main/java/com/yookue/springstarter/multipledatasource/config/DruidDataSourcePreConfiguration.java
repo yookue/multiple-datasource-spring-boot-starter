@@ -19,6 +19,7 @@ package com.yookue.springstarter.multipledatasource.config;
 
 import javax.sql.DataSource;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -42,7 +43,7 @@ import com.yookue.springstarter.multipledatasource.druid.DruidWebStatFilterConfi
  * @author David Hsing
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(prefix = "spring.multiple-datasource", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true)
 @ConditionalOnAnyProperties(value = {
     @ConditionalOnProperty(prefix = "spring.multiple-datasource.primary", name = "type", havingValue = "com.alibaba.druid.pool.DruidDataSource", matchIfMissing = true),
     @ConditionalOnProperty(prefix = "spring.multiple-datasource.secondary", name = "type", havingValue = "com.alibaba.druid.pool.DruidDataSource", matchIfMissing = true),

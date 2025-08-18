@@ -21,8 +21,8 @@ import javax.sql.DataSource;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
@@ -33,7 +33,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.stereotype.Repository;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAllProperties;
+import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAllBooleanProperties;
 import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAnnotation;
 
 
@@ -43,10 +43,10 @@ import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAnnotatio
  * @author David Hsing
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnAllProperties(value = {
-    @ConditionalOnProperty(prefix = "spring.multiple-datasource", name = "enabled", havingValue = "true", matchIfMissing = true),
-    @ConditionalOnProperty(prefix = SecondaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-enabled", havingValue = "true", matchIfMissing = true),
-    @ConditionalOnProperty(prefix = SecondaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "repository-enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnAllBooleanProperties(value = {
+    @ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true),
+    @ConditionalOnBooleanProperty(prefix = SecondaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-enabled", matchIfMissing = true),
+    @ConditionalOnBooleanProperty(prefix = SecondaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "repository-enabled", matchIfMissing = true)
 })
 @ConditionalOnClass(value = {DataSource.class, JdbcOperations.class, JpaDialect.class, JpaRepository.class})
 @ConditionalOnBean(name = SecondaryDataSourceJdbcConfiguration.DATA_SOURCE)
