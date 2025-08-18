@@ -295,7 +295,7 @@ public class PrimaryDataSourceJdbcConfiguration {
         }
 
         @Bean(name = TRANSACTION_MANAGER)
-        @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "jdbc-transaction", havingValue = "true", matchIfMissing = true)
+        @ConditionalOnBooleanProperty(prefix = PROPERTIES_PREFIX, name = "jdbc-transaction", matchIfMissing = true)
         @ConditionalOnBean(name = DATA_SOURCE, value = DataSourceBuilder.class)
         @ConditionalOnMissingBean(name = TRANSACTION_MANAGER)
         public TransactionManager transactionManager(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE) DataSource dataSource, @Nonnull ObjectProvider<TransactionManagerCustomizers> customizers) {

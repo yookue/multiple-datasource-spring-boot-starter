@@ -34,7 +34,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
@@ -167,7 +166,7 @@ public class PrimaryDataSourceJpaConfiguration {
 
     @Primary
     @Bean(name = PrimaryDataSourceJdbcConfiguration.TRANSACTION_MANAGER)
-    @ConditionalOnProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-transaction", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnBooleanProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-transaction", matchIfMissing = true)
     @ConditionalOnBean(name = ENTITY_MANAGER_FACTORY, value = DataSourceBuilder.class)
     @ConditionalOnMissingBean(name = PrimaryDataSourceJdbcConfiguration.TRANSACTION_MANAGER)
     public TransactionManager transactionManager(@Nonnull DataSourceBuilder builder, @Qualifier(value = ENTITY_MANAGER_FACTORY) @Nonnull EntityManagerFactory factory, @Nonnull ObjectProvider<TransactionManagerCustomizers> customizers) {

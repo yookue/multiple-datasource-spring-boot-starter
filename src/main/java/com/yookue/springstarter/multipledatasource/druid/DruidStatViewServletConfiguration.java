@@ -21,8 +21,8 @@ import java.util.Collections;
 import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +37,7 @@ import com.yookue.commonplexus.javaseutil.util.StringUtilsWraps;
  * @author David Hsing
  */
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@ConditionalOnProperty(name = "spring.datasource.druid.stat-view-servlet.enabled", havingValue = "true")
+@ConditionalOnBooleanProperty(prefix = "spring.datasource.druid.stat-view-servlet", name = "enabled")
 public class DruidStatViewServletConfiguration {
     public static final String STAT_VIEW_SERVLET = "druidStatViewServletRegistration";    // $NON-NLS-1$
     private static final String DEFAULT_ALLOW_IP = "127.0.0.1";    // $NON-NLS-1$

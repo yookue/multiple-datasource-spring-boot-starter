@@ -22,8 +22,8 @@ import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +38,7 @@ import com.yookue.commonplexus.javaseutil.util.StringUtilsWraps;
  * @author David Hsing
  */
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@ConditionalOnProperty(name = "spring.datasource.druid.web-stat-filter.enabled", havingValue = "true")
+@ConditionalOnBooleanProperty(prefix = "spring.datasource.druid.web-stat-filter", name = "enabled")
 public class DruidWebStatFilterConfiguration {
     public static final String WEB_STAT_FILTER = "druidWebStatFilterRegistration";    // $NON-NLS-1$
     private static final String DEFAULT_EXCLUSIONS = "*.3gp,*.7z,*.aac,*.ape,*.asf,*.avi,*.bmp,*.css,*.doc,*.docx,*.eot,*.flac,*.flv,*.gif,*.gz,*.ico,*.jpeg,*.jpg,*.js,*.less,*.log,*.map,*.mkv,*.mp3,*.mp4,*.ogg,*.pdf,*.png,*.ppt,*.pptx,*.psd,*.rar,*.rmvb,*.rtf,*.svg,*.swf,*.tar,*.tiff,*.ttf,*.txt,*.wav,*.wma,*.wmv,*.woff,*.woff2,*.xls,*.xlsx,*.xml,*.yml,*.zip";    // $NON-NLS-1$
