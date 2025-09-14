@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.config;
+package cn.unikue.springstarter.multipledatasource.config;
 
 
 import java.util.List;
@@ -52,37 +52,37 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.TransactionManager;
 import com.alibaba.druid.filter.Filter;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAnyProperties;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnMissingProperty;
-import com.yookue.springstarter.datasourcebuilder.composer.DataSourceBuilder;
-import com.yookue.springstarter.datasourcebuilder.config.DataSourceBuilderConfiguration;
-import com.yookue.springstarter.datasourcebuilder.constant.DataSourcePoolConst;
-import com.yookue.springstarter.datasourcebuilder.enumeration.DataSourcePoolType;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAnyProperties;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnMissingProperty;
+import cn.unikue.springstarter.datasourcebuilder.composer.DataSourceBuilder;
+import cn.unikue.springstarter.datasourcebuilder.config.DataSourceBuilderConfiguration;
+import cn.unikue.springstarter.datasourcebuilder.constant.DataSourcePoolConst;
+import cn.unikue.springstarter.datasourcebuilder.enumeration.DataSourcePoolType;
 
 
 /**
- * Secondary datasource configuration for JDBC
+ * Tertiary datasource configuration for JDBC
  *
  * @author David Hsing
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true)
 @ConditionalOnAnyProperties(value = {
-    @ConditionalOnProperty(prefix = SecondaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "jndi-name"),
-    @ConditionalOnProperty(prefix = SecondaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "url")
+    @ConditionalOnProperty(prefix = TertiaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "jndi-name"),
+    @ConditionalOnProperty(prefix = TertiaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "url")
 })
 @ConditionalOnClass(value = {DataSource.class, JdbcOperations.class})
-@AutoConfigureAfter(value = {DataSourceBuilderConfiguration.class, PrimaryDataSourceJdbcConfiguration.class})
+@AutoConfigureAfter(value = {DataSourceBuilderConfiguration.class, SecondaryDataSourceJdbcConfiguration.class})
 @AutoConfigureBefore(value = {DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@Import(value = {DataSourceBuilderConfiguration.class, SecondaryDataSourceJdbcConfiguration.Entry.class, SecondaryDataSourceJdbcConfiguration.Xa.class, SecondaryDataSourceJdbcConfiguration.Jndi.class, SecondaryDataSourceJdbcConfiguration.C3p0.class, SecondaryDataSourceJdbcConfiguration.Dbcp2.class, SecondaryDataSourceJdbcConfiguration.Druid.class, SecondaryDataSourceJdbcConfiguration.Hikari.class, SecondaryDataSourceJdbcConfiguration.OracleUcp.class, SecondaryDataSourceJdbcConfiguration.Tomcat.class, SecondaryDataSourceJdbcConfiguration.Generic.class, SecondaryDataSourceJdbcConfiguration.Stage.class})
+@Import(value = {DataSourceBuilderConfiguration.class, TertiaryDataSourceJdbcConfiguration.Entry.class, TertiaryDataSourceJdbcConfiguration.Xa.class, TertiaryDataSourceJdbcConfiguration.Jndi.class, TertiaryDataSourceJdbcConfiguration.C3p0.class, TertiaryDataSourceJdbcConfiguration.Dbcp2.class, TertiaryDataSourceJdbcConfiguration.Druid.class, TertiaryDataSourceJdbcConfiguration.Hikari.class, TertiaryDataSourceJdbcConfiguration.OracleUcp.class, TertiaryDataSourceJdbcConfiguration.Tomcat.class, TertiaryDataSourceJdbcConfiguration.Generic.class, TertiaryDataSourceJdbcConfiguration.Stage.class})
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-public class SecondaryDataSourceJdbcConfiguration {
-    public static final String PROPERTIES_PREFIX = "spring.multiple-datasource.secondary";    // $NON-NLS-1$
-    public static final String DATA_SOURCE_PROPERTIES = "secondaryDataSourceProperties";    // $NON-NLS-1$
-    public static final String DATA_SOURCE = "secondaryDataSource";    // $NON-NLS-1$
-    public static final String JDBC_TEMPLATE = "secondaryDataSourceJdbcTemplate";    // $NON-NLS-1$
-    public static final String TRANSACTION_MANAGER = "secondaryDataSourceTransactionManager";    // $NON-NLS-1$
-    public static final String METADATA_PROVIDER = "secondaryDataSourceMetadataProvider";    // $NON-NLS-1$
+public class TertiaryDataSourceJdbcConfiguration {
+    public static final String PROPERTIES_PREFIX = "spring.multiple-datasource.tertiary";    // $NON-NLS-1$
+    public static final String DATA_SOURCE_PROPERTIES = "tertiaryDataSourceProperties";    // $NON-NLS-1$
+    public static final String DATA_SOURCE = "tertiaryDataSource";    // $NON-NLS-1$
+    public static final String JDBC_TEMPLATE = "tertiaryDataSourceJdbcTemplate";    // $NON-NLS-1$
+    public static final String TRANSACTION_MANAGER = "tertiaryDataSourceTransactionManager";    // $NON-NLS-1$
+    public static final String METADATA_PROVIDER = "tertiaryDataSourceMetadataProvider";    // $NON-NLS-1$
 
 
     @Order(value = 0)

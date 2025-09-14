@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.config;
+package cn.unikue.springstarter.multipledatasource.config;
 
 
 import javax.sql.DataSource;
@@ -34,9 +34,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnPropertyPrefix;
-import com.yookue.springstarter.mybatisdelegator.composer.MybatisConfigurationDelegator;
-import com.yookue.springstarter.mybatisdelegator.config.MybatisDelegatorAutoConfiguration;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnPropertyPrefix;
+import cn.unikue.springstarter.mybatisdelegator.composer.MybatisConfigurationDelegator;
+import cn.unikue.springstarter.mybatisdelegator.config.MybatisDelegatorAutoConfiguration;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.config;
+package cn.unikue.springstarter.multipledatasource.config;
 
 
 import javax.sql.DataSource;
@@ -29,12 +29,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAnyProperties;
-import com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration;
-import com.yookue.springstarter.multipledatasource.druid.DruidSpringAopConfiguration;
-import com.yookue.springstarter.multipledatasource.druid.DruidStatProperties;
-import com.yookue.springstarter.multipledatasource.druid.DruidStatViewServletConfiguration;
-import com.yookue.springstarter.multipledatasource.druid.DruidWebStatFilterConfiguration;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAnyProperties;
+import cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration;
+import cn.unikue.springstarter.multipledatasource.druid.DruidSpringAopConfiguration;
+import cn.unikue.springstarter.multipledatasource.druid.DruidStatProperties;
+import cn.unikue.springstarter.multipledatasource.druid.DruidStatViewServletConfiguration;
+import cn.unikue.springstarter.multipledatasource.druid.DruidWebStatFilterConfiguration;
 
 
 /**

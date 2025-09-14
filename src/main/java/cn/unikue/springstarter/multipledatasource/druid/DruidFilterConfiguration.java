@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.druid;
+package cn.unikue.springstarter.multipledatasource.druid;
 
 
 import jakarta.annotation.Nonnull;

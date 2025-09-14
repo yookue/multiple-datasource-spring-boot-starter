@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.config;
+package cn.unikue.springstarter.multipledatasource.config;
 
 
 import javax.sql.DataSource;
@@ -33,27 +33,27 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.stereotype.Repository;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAllBooleanProperties;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAnnotation;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAllBooleanProperties;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAnnotation;
 
 
 /**
- * Primary datasource configuration for Spring Data JPA repository
+ * Secondary datasource configuration for Spring Data JPA repository
  *
  * @author David Hsing
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnAllBooleanProperties(value = {
     @ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true),
-    @ConditionalOnBooleanProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-enabled", matchIfMissing = true),
-    @ConditionalOnBooleanProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "repository-enabled", matchIfMissing = true)
+    @ConditionalOnBooleanProperty(prefix = SecondaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-enabled", matchIfMissing = true),
+    @ConditionalOnBooleanProperty(prefix = SecondaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "repository-enabled", matchIfMissing = true)
 })
 @ConditionalOnClass(value = {DataSource.class, JdbcOperations.class, JpaDialect.class, JpaRepository.class})
-@ConditionalOnBean(name = PrimaryDataSourceJdbcConfiguration.DATA_SOURCE)
-@ConditionalOnAnnotation(includeFilter = Repository.class, basePackage = PrimaryDataSourceRepositoryConfiguration.REPOSITORY_PACKAGE)
-@AutoConfigureAfter(value = PrimaryDataSourceJpaConfiguration.class)
+@ConditionalOnBean(name = SecondaryDataSourceJdbcConfiguration.DATA_SOURCE)
+@ConditionalOnAnnotation(includeFilter = Repository.class, basePackage = SecondaryDataSourceRepositoryConfiguration.REPOSITORY_PACKAGE)
+@AutoConfigureAfter(value = {PrimaryDataSourceRepositoryConfiguration.class, SecondaryDataSourceJpaConfiguration.class})
 @AutoConfigureBefore(value = {DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@EnableJpaRepositories(basePackages = PrimaryDataSourceRepositoryConfiguration.REPOSITORY_PACKAGE, entityManagerFactoryRef = PrimaryDataSourceJpaConfiguration.ENTITY_MANAGER_FACTORY, transactionManagerRef = PrimaryDataSourceJdbcConfiguration.TRANSACTION_MANAGER)
-public class PrimaryDataSourceRepositoryConfiguration {
-    public static final String REPOSITORY_PACKAGE = "**.repository.primary.rdbms";    // $NON-NLS-1$
+@EnableJpaRepositories(basePackages = SecondaryDataSourceRepositoryConfiguration.REPOSITORY_PACKAGE, entityManagerFactoryRef = SecondaryDataSourceJpaConfiguration.ENTITY_MANAGER_FACTORY, transactionManagerRef = SecondaryDataSourceJdbcConfiguration.TRANSACTION_MANAGER)
+public class SecondaryDataSourceRepositoryConfiguration {
+    public static final String REPOSITORY_PACKAGE = "**.repository.secondary.rdbms";    // $NON-NLS-1$
 }

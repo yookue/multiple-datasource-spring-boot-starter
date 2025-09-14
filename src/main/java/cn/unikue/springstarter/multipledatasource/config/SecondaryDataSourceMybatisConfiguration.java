@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.config;
+package cn.unikue.springstarter.multipledatasource.config;
 
 
 import javax.sql.DataSource;
@@ -33,31 +33,31 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnPropertyPrefix;
-import com.yookue.springstarter.mybatisdelegator.composer.MybatisConfigurationDelegator;
-import com.yookue.springstarter.mybatisdelegator.config.MybatisDelegatorAutoConfiguration;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnPropertyPrefix;
+import cn.unikue.springstarter.mybatisdelegator.composer.MybatisConfigurationDelegator;
+import cn.unikue.springstarter.mybatisdelegator.config.MybatisDelegatorAutoConfiguration;
 
 
 /**
- * Tertiary datasource configuration for mybatis
+ * Secondary datasource configuration for mybatis
  *
  * @author David Hsing
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true)
-@ConditionalOnPropertyPrefix(prefix = TertiaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX + ".mybatis")
+@ConditionalOnPropertyPrefix(prefix = SecondaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX + ".mybatis")
 @ConditionalOnClass(value = {DataSource.class, SqlSession.class, MybatisConfigurationDelegator.class})
-@ConditionalOnBean(name = TertiaryDataSourceJdbcConfiguration.DATA_SOURCE)
-@AutoConfigureAfter(value = {MybatisDelegatorAutoConfiguration.class, SecondaryDataSourceMybatisConfiguration.class, TertiaryDataSourceRepositoryConfiguration.class})
+@ConditionalOnBean(name = SecondaryDataSourceJdbcConfiguration.DATA_SOURCE)
+@AutoConfigureAfter(value = {MybatisDelegatorAutoConfiguration.class, PrimaryDataSourceMybatisConfiguration.class, SecondaryDataSourceRepositoryConfiguration.class})
 @Import(value = MybatisDelegatorAutoConfiguration.class)
-public class TertiaryDataSourceMybatisConfiguration {
-    public static final String MYBATIS_PROPERTIES = "tertiaryMybatisProperties";    // $NON-NLS-1$
-    public static final String SQL_SESSION_FACTORY = "tertiarySqlSessionFactory";    // $NON-NLS-1$
-    public static final String SQL_SESSION_TEMPLATE = "tertiarySqlSessionTemplate";    // $NON-NLS-1$
+public class SecondaryDataSourceMybatisConfiguration {
+    public static final String MYBATIS_PROPERTIES = "secondaryMybatisProperties";    // $NON-NLS-1$
+    public static final String SQL_SESSION_FACTORY = "secondarySqlSessionFactory";    // $NON-NLS-1$
+    public static final String SQL_SESSION_TEMPLATE = "secondarySqlSessionTemplate";    // $NON-NLS-1$
 
     @Bean(name = MYBATIS_PROPERTIES)
     @ConditionalOnMissingBean(name = MYBATIS_PROPERTIES)
-    @ConfigurationProperties(prefix = TertiaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX + ".mybatis")
+    @ConfigurationProperties(prefix = SecondaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX + ".mybatis")
     public MybatisProperties mybatisProperties() {
         return new MybatisProperties();
     }
@@ -66,7 +66,7 @@ public class TertiaryDataSourceMybatisConfiguration {
     @ConditionalOnBean(name = MYBATIS_PROPERTIES, value = MybatisConfigurationDelegator.class)
     @ConditionalOnMissingBean(name = SQL_SESSION_FACTORY)
     public SqlSessionFactory sqlSessionFactory(@Nonnull MybatisConfigurationDelegator delegator,
-        @Qualifier(value = TertiaryDataSourceJdbcConfiguration.DATA_SOURCE) @Nonnull DataSource dataSource,
+        @Qualifier(value = SecondaryDataSourceJdbcConfiguration.DATA_SOURCE) @Nonnull DataSource dataSource,
         @Qualifier(value = MYBATIS_PROPERTIES) @Nonnull MybatisProperties properties) throws Exception {
         return delegator.sqlSessionFactory(dataSource, properties);
     }

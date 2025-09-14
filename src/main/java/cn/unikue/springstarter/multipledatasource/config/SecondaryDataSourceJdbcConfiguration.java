@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.config;
+package cn.unikue.springstarter.multipledatasource.config;
 
 
 import java.util.List;
@@ -46,50 +46,47 @@ import org.springframework.boot.jdbc.metadata.TomcatDataSourcePoolMetadata;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.TransactionManager;
 import com.alibaba.druid.filter.Filter;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnAnyProperties;
-import com.yookue.commonplexus.springcondition.annotation.ConditionalOnMissingProperty;
-import com.yookue.springstarter.datasourcebuilder.composer.DataSourceBuilder;
-import com.yookue.springstarter.datasourcebuilder.config.DataSourceBuilderConfiguration;
-import com.yookue.springstarter.datasourcebuilder.constant.DataSourcePoolConst;
-import com.yookue.springstarter.datasourcebuilder.enumeration.DataSourcePoolType;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAnyProperties;
+import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnMissingProperty;
+import cn.unikue.springstarter.datasourcebuilder.composer.DataSourceBuilder;
+import cn.unikue.springstarter.datasourcebuilder.config.DataSourceBuilderConfiguration;
+import cn.unikue.springstarter.datasourcebuilder.constant.DataSourcePoolConst;
+import cn.unikue.springstarter.datasourcebuilder.enumeration.DataSourcePoolType;
 
 
 /**
- * Primary datasource configuration for JDBC
+ * Secondary datasource configuration for JDBC
  *
  * @author David Hsing
- * @see org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true)
 @ConditionalOnAnyProperties(value = {
-    @ConditionalOnProperty(prefix = PrimaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "jndi-name"),
-    @ConditionalOnProperty(prefix = PrimaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "url")
+    @ConditionalOnProperty(prefix = SecondaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "jndi-name"),
+    @ConditionalOnProperty(prefix = SecondaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX, name = "url")
 })
 @ConditionalOnClass(value = {DataSource.class, JdbcOperations.class})
-@AutoConfigureAfter(value = {DataSourceBuilderConfiguration.class, DruidDataSourcePreConfiguration.class})
+@AutoConfigureAfter(value = {DataSourceBuilderConfiguration.class, PrimaryDataSourceJdbcConfiguration.class})
 @AutoConfigureBefore(value = {DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@Import(value = {DataSourceBuilderConfiguration.class, PrimaryDataSourceJdbcConfiguration.Entry.class, PrimaryDataSourceJdbcConfiguration.Xa.class, PrimaryDataSourceJdbcConfiguration.Jndi.class, PrimaryDataSourceJdbcConfiguration.C3p0.class, PrimaryDataSourceJdbcConfiguration.Dbcp2.class, PrimaryDataSourceJdbcConfiguration.Druid.class, PrimaryDataSourceJdbcConfiguration.Hikari.class, PrimaryDataSourceJdbcConfiguration.OracleUcp.class, PrimaryDataSourceJdbcConfiguration.Tomcat.class, PrimaryDataSourceJdbcConfiguration.Generic.class, PrimaryDataSourceJdbcConfiguration.Stage.class})
+@Import(value = {DataSourceBuilderConfiguration.class, SecondaryDataSourceJdbcConfiguration.Entry.class, SecondaryDataSourceJdbcConfiguration.Xa.class, SecondaryDataSourceJdbcConfiguration.Jndi.class, SecondaryDataSourceJdbcConfiguration.C3p0.class, SecondaryDataSourceJdbcConfiguration.Dbcp2.class, SecondaryDataSourceJdbcConfiguration.Druid.class, SecondaryDataSourceJdbcConfiguration.Hikari.class, SecondaryDataSourceJdbcConfiguration.OracleUcp.class, SecondaryDataSourceJdbcConfiguration.Tomcat.class, SecondaryDataSourceJdbcConfiguration.Generic.class, SecondaryDataSourceJdbcConfiguration.Stage.class})
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-public class PrimaryDataSourceJdbcConfiguration {
-    public static final String PROPERTIES_PREFIX = "spring.multiple-datasource.primary";    // $NON-NLS-1$
-    public static final String DATA_SOURCE_PROPERTIES = "primaryDataSourceProperties";    // $NON-NLS-1$
-    public static final String DATA_SOURCE = "primaryDataSource";    // $NON-NLS-1$
-    public static final String JDBC_TEMPLATE = "primaryDataSourceJdbcTemplate";    // $NON-NLS-1$
-    public static final String TRANSACTION_MANAGER = "primaryDataSourceTransactionManager";    // $NON-NLS-1$
-    public static final String METADATA_PROVIDER = "primaryDataSourceMetadataProvider";    // $NON-NLS-1$
+public class SecondaryDataSourceJdbcConfiguration {
+    public static final String PROPERTIES_PREFIX = "spring.multiple-datasource.secondary";    // $NON-NLS-1$
+    public static final String DATA_SOURCE_PROPERTIES = "secondaryDataSourceProperties";    // $NON-NLS-1$
+    public static final String DATA_SOURCE = "secondaryDataSource";    // $NON-NLS-1$
+    public static final String JDBC_TEMPLATE = "secondaryDataSourceJdbcTemplate";    // $NON-NLS-1$
+    public static final String TRANSACTION_MANAGER = "secondaryDataSourceTransactionManager";    // $NON-NLS-1$
+    public static final String METADATA_PROVIDER = "secondaryDataSourceMetadataProvider";    // $NON-NLS-1$
 
 
     @Order(value = 0)
     static class Entry {
-        @Primary
         @Bean(name = DATA_SOURCE_PROPERTIES)
         @ConditionalOnBean(value = DataSourceBuilder.class)
         @ConditionalOnMissingBean(name = DATA_SOURCE_PROPERTIES)
@@ -103,7 +100,6 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = {DataSourceBuilder.class, XADataSourceWrapper.class})
     @Order(value = 1)
     static class Xa {
-        @Primary
         @Bean(name = DATA_SOURCE)
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public DataSource dataSource(@Nonnull DataSourceBuilder builder, @Nonnull XADataSourceWrapper wrapper, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) throws Exception {
@@ -117,7 +113,6 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
     @Order(value = 2)
     static class Jndi {
-        @Primary
         @Bean(name = DATA_SOURCE)
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public DataSource dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) {
@@ -132,7 +127,6 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
     @Order(value = 3)
     static class C3p0 {
-        @Primary
         @Bean(name = DATA_SOURCE, destroyMethod = "close")
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public com.mchange.v2.c3p0.ComboPooledDataSource dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) {
@@ -147,14 +141,12 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
     @Order(value = 4)
     static class Dbcp2 {
-        @Primary
         @Bean(name = DATA_SOURCE, destroyMethod = "close")
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public org.apache.commons.dbcp2.BasicDataSource dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) {
             return (org.apache.commons.dbcp2.BasicDataSource) builder.dataSource(properties, DataSourcePoolType.DBCP2);
         }
 
-        @Primary
         @Bean(name = METADATA_PROVIDER)
         @ConditionalOnMissingBean(name = METADATA_PROVIDER)
         public DataSourcePoolMetadataProvider metadataProvider(@Qualifier(value = DATA_SOURCE) @Nonnull org.apache.commons.dbcp2.BasicDataSource dataSource) {
@@ -169,7 +161,6 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
     @Order(value = 5)
     static class Druid {
-        @Primary
         @Bean(name = DATA_SOURCE, initMethod = "init", destroyMethod = "close")
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public com.alibaba.druid.pool.DruidDataSource dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties, @Nullable List<Filter> filters) {
@@ -186,14 +177,12 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
     @Order(value = 6)
     static class Hikari {
-        @Primary
         @Bean(name = DATA_SOURCE, destroyMethod = "close")
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public com.zaxxer.hikari.HikariDataSource dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) {
             return (com.zaxxer.hikari.HikariDataSource) builder.dataSource(properties, DataSourcePoolType.HIKARI);
         }
 
-        @Primary
         @Bean(name = METADATA_PROVIDER)
         @ConditionalOnMissingBean(name = METADATA_PROVIDER)
         public DataSourcePoolMetadataProvider metadataProvider(@Qualifier(value = DATA_SOURCE) @Nonnull com.zaxxer.hikari.HikariDataSource dataSource) {
@@ -208,14 +197,12 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
     @Order(value = 7)
     static class OracleUcp {
-        @Primary
         @Bean(name = DATA_SOURCE)
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public oracle.ucp.jdbc.PoolDataSourceImpl dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) {
             return (oracle.ucp.jdbc.PoolDataSourceImpl) builder.dataSource(properties, DataSourcePoolType.ORACLE_UCP);
         }
 
-        @Primary
         @Bean(name = METADATA_PROVIDER)
         @ConditionalOnMissingBean(name = METADATA_PROVIDER)
         public DataSourcePoolMetadataProvider metadataProvider(@Qualifier(value = DATA_SOURCE) @Nonnull oracle.ucp.jdbc.PoolDataSourceImpl dataSource) {
@@ -230,14 +217,12 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
     @Order(value = 8)
     static class OracleUcpXa {
-        @Primary
         @Bean(name = DATA_SOURCE)
         @ConditionalOnMissingBean(name = DATA_SOURCE)
         public oracle.ucp.jdbc.PoolXADataSourceImpl dataSource(@Nonnull DataSourceBuilder builder, @Qualifier(value = DATA_SOURCE_PROPERTIES) @Nonnull DataSourceProperties properties) {
             return (oracle.ucp.jdbc.PoolXADataSourceImpl) builder.dataSource(properties, DataSourcePoolType.ORACLE_UCP_XA);
         }
 
-        @Primary
         @Bean(name = METADATA_PROVIDER)
         @ConditionalOnMissingBean(name = METADATA_PROVIDER)
         public DataSourcePoolMetadataProvider metadataProvider(@Qualifier(value = DATA_SOURCE) @Nonnull oracle.ucp.jdbc.PoolXADataSourceImpl dataSource) {
@@ -251,7 +236,6 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnBean(name = DATA_SOURCE, value = org.apache.tomcat.jdbc.pool.DataSource.class)
     @Order(value = 9)
     static class Tomcat {
-        @Primary
         @Bean(name = DATA_SOURCE, destroyMethod = "close")
         @ConditionalOnProperty(prefix = PROPERTIES_PREFIX, name = "type", havingValue = DataSourcePoolConst.TOMCAT, matchIfMissing = true)
         @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
@@ -262,7 +246,6 @@ public class PrimaryDataSourceJdbcConfiguration {
             return (org.apache.tomcat.jdbc.pool.DataSource) builder.dataSource(properties, DataSourcePoolType.TOMCAT);
         }
 
-        @Primary
         @Bean(name = METADATA_PROVIDER)
         @ConditionalOnMissingBean(name = METADATA_PROVIDER)
         public DataSourcePoolMetadataProvider metadataProvider(@Qualifier(value = DATA_SOURCE) @Nonnull org.apache.tomcat.jdbc.pool.DataSource dataSource) {
@@ -274,7 +257,6 @@ public class PrimaryDataSourceJdbcConfiguration {
     @ConditionalOnMissingProperty(prefix = PROPERTIES_PREFIX, name = "jndi-name")
     @Order(value = 10)
     static class Generic {
-        @Primary
         @Bean(name = DATA_SOURCE)
         @ConditionalOnBean(name = DATA_SOURCE_PROPERTIES, value = DataSourceBuilder.class)
         @ConditionalOnMissingBean(name = DATA_SOURCE)
@@ -286,7 +268,6 @@ public class PrimaryDataSourceJdbcConfiguration {
 
     @Order(value = 11)
     static class Stage {
-        @Primary
         @Bean(name = JDBC_TEMPLATE)
         @ConditionalOnBean(name = DATA_SOURCE)
         @ConditionalOnMissingBean(name = JDBC_TEMPLATE)

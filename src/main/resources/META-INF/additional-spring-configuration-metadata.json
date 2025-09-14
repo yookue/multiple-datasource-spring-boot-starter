@@ -9,56 +9,56 @@
         {
             "name": "spring.datasource.druid.filter.stat.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable StatFilter.",
             "defaultValue": true
         },
         {
             "name": "spring.datasource.druid.filter.config.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable ConfigFilter.",
             "defaultValue": false
         },
         {
             "name": "spring.datasource.druid.filter.encoding.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable EncodingConvertFilter.",
             "defaultValue": false
         },
         {
             "name": "spring.datasource.druid.filter.slf4j.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable Slf4jLogFilter.",
             "defaultValue": false
         },
         {
             "name": "spring.datasource.druid.filter.log4j.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable Log4jFilter.",
             "defaultValue": false
         },
         {
             "name": "spring.datasource.druid.filter.log4j2.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable Log4j2Filter.",
             "defaultValue": false
         },
         {
             "name": "spring.datasource.druid.filter.commons-log.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable CommonsLogFilter.",
             "defaultValue": false
         },
         {
             "name": "spring.datasource.druid.filter.wall.enabled",
             "type": "java.lang.Boolean",
-            "sourceType": "com.yookue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
+            "sourceType": "cn.unikue.springstarter.multipledatasource.druid.DruidFilterConfiguration",
             "description": "Enable WallFilter.",
             "defaultValue": false
         }

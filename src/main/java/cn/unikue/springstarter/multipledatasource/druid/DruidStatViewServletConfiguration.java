@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.druid;
+package cn.unikue.springstarter.multipledatasource.druid;
 
 
 import java.util.Collections;
@@ -27,7 +27,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import com.alibaba.druid.support.jakarta.StatViewServlet;
-import com.yookue.commonplexus.javaseutil.util.StringUtilsWraps;
+import cn.unikue.commonplexus.javaseutil.util.StringUtilsWraps;
 
 
 /**

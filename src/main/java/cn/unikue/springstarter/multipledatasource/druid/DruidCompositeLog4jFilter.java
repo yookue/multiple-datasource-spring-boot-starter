@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Yookue Ltd. All rights reserved.
+ * Copyright (c) 2020 Unikue Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package com.yookue.springstarter.multipledatasource.druid;
+package cn.unikue.springstarter.multipledatasource.druid;
 
 
 import jakarta.annotation.Nullable;
-import com.alibaba.druid.filter.logging.Slf4jLogFilter;
+import com.alibaba.druid.filter.logging.Log4jFilter;
 import com.alibaba.druid.sql.SQLUtils;
-import com.yookue.commonplexus.javaseutil.util.BeautifulFormatWraps;
+import cn.unikue.commonplexus.javaseutil.util.BeautifulFormatWraps;
 
 
 /**
- * Druid filter for slf4j
+ * Druid filter for log4j
  *
  * @author David Hsing
  */
-public class DruidCompositeSlf4jFilter extends Slf4jLogFilter {
-    public DruidCompositeSlf4jFilter() {
+public class DruidCompositeLog4jFilter extends Log4jFilter {
+    public DruidCompositeLog4jFilter() {
         super.setStatementSqlFormatOption(new SQLUtils.FormatOption(false, false));
     }
 
