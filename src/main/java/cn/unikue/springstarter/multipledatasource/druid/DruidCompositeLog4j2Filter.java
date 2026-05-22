@@ -20,7 +20,7 @@ package cn.unikue.springstarter.multipledatasource.druid;
 import jakarta.annotation.Nullable;
 import com.alibaba.druid.filter.logging.Log4j2Filter;
 import com.alibaba.druid.sql.SQLUtils;
-import cn.unikue.commonplexus.javaseutil.util.BeautifulFormatWraps;
+import cn.unikue.commonplexus.javaseutil.util.StringUtilsWraps;
 
 
 /**
@@ -35,7 +35,6 @@ public class DruidCompositeLog4j2Filter extends Log4j2Filter {
 
     @Override
     protected void statementLog(@Nullable String message) {
-        message = BeautifulFormatWraps.combine2Singleton(message);
-        super.statementLog(message);
+        super.statementLog(StringUtilsWraps.combineSpaceLines(message));
     }
 }
