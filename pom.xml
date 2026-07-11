@@ -22,7 +22,7 @@
 
     <groupId>cn.unikue.springstarter</groupId>
     <artifactId>multiple-datasource-spring-boot-starter</artifactId>
-    <version>3.5.14</version>
+    <version>3.5.15</version>
 
     <name>${project.artifactId}</name>
     <description>Unikue Multiple Datasource for Spring Boot Starter</description>
@@ -47,14 +47,14 @@
         <project.build.resourceEncoding>${file.encoding}</project.build.resourceEncoding>
         <project.reporting.outputEncoding>${file.encoding}</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.5.14</spring-boot.version>
+        <spring-boot.version>3.5.15</spring-boot.version>
 
-        <c3p0.version>0.13.0</c3p0.version>
+        <c3p0.version>0.14.1</c3p0.version>
         <druid.version>1.2.28</druid.version>
-        <plexus-spring-condition.version>3.5.14</plexus-spring-condition.version>
+        <plexus-spring-condition.version>3.5.15</plexus-spring-condition.version>
 
-        <datasource-builder-spring-boot-starter.version>3.5.14</datasource-builder-spring-boot-starter.version>
-        <mybatis-delegator-spring-boot-starter.version>3.5.14</mybatis-delegator-spring-boot-starter.version>
+        <datasource-builder-spring-boot-starter.version>3.5.15</datasource-builder-spring-boot-starter.version>
+        <mybatis-delegator-spring-boot-starter.version>3.5.15</mybatis-delegator-spring-boot-starter.version>
 
         <javadoc-docent-maven-plugin.version>2.1.2</javadoc-docent-maven-plugin.version>
         <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
@@ -64,7 +64,7 @@
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-        <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
+        <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
